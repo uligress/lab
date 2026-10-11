@@ -4,49 +4,38 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AmnioSim — simulador educativo de amniocentesis ecoguiada</title>
-  <script type="module" crossorigin src="./assets/index-BIWsBWwA.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/index-D8thzLR3.css">
+  <script type="module" crossorigin src="./assets/index-B1kSi7WT.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-CUz5R5eB.css">
 </head>
 <body>
   <div id="app">
-    <header id="topbar">
-      <div class="brand"><span class="dot"></span>AmnioSim <span class="muted">· simulador educativo</span></div>
-      <div id="session-info" class="muted"></div>
-      <div class="top-actions">
-        <button id="btn-progress" class="ghost">Progreso</button>
-        <button id="btn-menu" class="ghost">Menú</button>
-        <button id="btn-mute" class="ghost" title="Silenciar">🔈</button>
-      </div>
-    </header>
-    <main id="station">
-      <section id="view3d"><canvas id="c3d"></canvas>
-        <div class="viewlabel">VISTA 3D <span id="xray-label" class="muted"></span></div>
-        <div id="legend" class="legend"></div>
-      </section>
-      <section id="monitor">
-        <div class="viewlabel">MONITOR · CONVEXA 3.5 MHz</div>
-        <canvas id="cus" width="640" height="520"></canvas>
+    <!-- escenario principal: ecografía a pantalla completa (V intercambia con la vista externa) -->
+    <section id="monitor" class="stage">
+      <div class="us-frame">
+        <canvas id="cus" width="720" height="580" aria-label="Imagen ecográfica simulada"></canvas>
         <div id="us-overlay"></div>
-        <div class="us-controls">
-          <label>Ganancia <input id="gain" type="range" min="0" max="100" value="55"></label>
-          <label>Profundidad <input id="depth" type="range" min="8" max="18" step="1" value="14"><span id="depth-val">14 cm</span></label>
-          <label>Foco <input id="focus" type="range" min="2" max="16" step="0.5" value="7"><span id="focus-val">7 cm</span></label>
-          <label class="chk"><input id="labels" type="checkbox"> Etiquetas</label>
+        <div class="us-console st-panel">
+          <label>GAN <input id="gain" type="range" min="0" max="100" value="55"><span id="gain-val">55</span></label>
+          <label>PROF <input id="depth" type="range" min="8" max="18" step="1" value="14"><span id="depth-val">14 cm</span></label>
+          <label>FOCO <input id="focus" type="range" min="2" max="16" step="0.5" value="7"><span id="focus-val">7 cm</span></label>
+          <label class="chk"><input id="labels" type="checkbox"> ETIQ</label>
         </div>
-      </section>
-    </main>
-    <footer id="instruments">
-      <div class="inst" id="i-phase"><div class="k">Fase</div><div class="v">—</div></div>
-      <div class="inst" id="i-tip"><div class="k">Punta</div><div class="v">—</div></div>
-      <div class="inst" id="i-depth"><div class="k">Aguja</div><div class="v">—</div></div>
-      <div class="inst" id="i-angle"><div class="k">Ángulo al haz</div><div class="v">—</div></div>
-      <div class="inst" id="i-res"><div class="k">Resistencia</div><div class="meter"><div class="bar"></div></div></div>
-      <div class="inst" id="i-asp"><div class="k">Aspiración</div><div class="meter"><div class="bar asp"></div></div></div>
-      <div class="inst" id="i-ins"><div class="k">Inserciones</div><div class="v">0</div></div>
-      <div class="inst" id="i-time"><div class="k">Tiempo</div><div class="v">0:00</div></div>
-      <div id="log"></div>
-      <div id="keys" class="muted"></div>
-    </footer>
+      </div>
+    </section>
+    <section id="view3d" class="pip">
+      <canvas id="c3d"></canvas>
+      <div class="viewlabel">VISTA EXTERNA <span id="xray-label" class="muted"></span></div>
+      <div id="legend" class="legend"></div>
+    </section>
+    <div id="vitals" class="st-panel st-vitals"></div>
+    <div class="top-actions">
+      <button id="btn-progress" class="ghost">Progreso</button>
+      <button id="btn-menu" class="ghost">Menú</button>
+      <button id="btn-mute" class="ghost" title="Silenciar">🔈</button>
+    </div>
+    <div id="overlay-host"></div>
+    <div id="session-info" class="hidden"></div>
+    <div id="log" class="hidden"></div>
   </div>
   <div id="tutorial" class="hidden"></div>
   <div id="modal" class="hidden"></div>
