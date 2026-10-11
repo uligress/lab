@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StentSim — angioplastia y stent ilíaco</title>
+  <script type="module" crossorigin src="./assets/index-BMCO_CpZ.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DpxiEkQt.css">
+</head>
+<body>
+  <div id="app">
+    <header id="topbar">
+      <div class="brand"><b>StentSim</b> <span class="muted">· simulador educativo</span></div>
+      <div id="session-info" class="muted"></div>
+      <div class="actions"><button id="btn-menu" class="ghost">Menú</button></div>
+    </header>
+    <main id="station">
+      <section id="screen">
+        <canvas id="fluoro" width="720" height="720" aria-label="Imagen de fluoroscopia simulada"></canvas>
+        <div id="hint" class="hint"></div>
+      </section>
+      <aside id="panel">
+        <div class="inst-grid">
+          <div class="inst"><div class="k">Fase</div><div class="v" id="i-phase">—</div></div>
+          <div class="inst"><div class="k">Dispositivo activo</div><div class="v" id="i-active">guía</div></div>
+          <div class="inst"><div class="k">Fluoroscopia</div><div class="v" id="i-fluoro">0:00</div></div>
+          <div class="inst"><div class="k">Contraste</div><div class="v" id="i-contrast">0 mL</div></div>
+          <div class="inst"><div class="k">Punta de la guía</div><div class="v" id="i-tip">—</div></div>
+          <div class="inst"><div class="k">Balón</div><div class="v" id="i-balloon">—</div></div>
+        </div>
+        <div class="tray">
+          <h3>Bandeja</h3>
+          <div class="tray-row">
+            <span>Catéter</span>
+            <button data-cat="vertebral">Vertebral</button>
+            <button data-cat="crossover">Curva invertida</button>
+          </div>
+          <div class="tray-row">
+            <span>Balón</span>
+            <select id="b-d" aria-label="Diámetro del balón"></select><select id="b-l" aria-label="Longitud del balón"></select>
+            <button id="load-balloon">Cargar</button>
+          </div>
+          <div class="tray-row">
+            <span>Stent</span>
+            <select id="s-d" aria-label="Diámetro del stent"></select><select id="s-l" aria-label="Longitud del stent"></select>
+            <button id="load-stent">Cargar</button>
+          </div>
+          <div class="tray-row"><button id="remove">Retirar dispositivo (X)</button><button id="finish" class="primary">Terminar (Enter)</button></div>
+        </div>
+        <div id="log"></div>
+        <div id="keys" class="muted"></div>
+      </aside>
+    </main>
+  </div>
+  <div id="modal" class="hidden"></div>
+</body>
+</html>
