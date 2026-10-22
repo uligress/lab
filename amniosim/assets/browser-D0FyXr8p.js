@@ -4224,7 +4224,7 @@ void main() {
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:calc(100vw - 380px)}
 .st-hud{position:absolute;left:16px;bottom:16px;z-index:6;background:rgba(10,13,17,.8);border:1px solid rgba(200,214,226,.16);border-radius:8px;padding:10px 12px;
   font:11.5px/1.6 var(--mono,ui-monospace,Menlo,monospace);color:#9aa5b0;max-width:300px}
-.st-hud-h{color:var(--acc,#4fb3c9);font-size:12.5px;margin-bottom:2px}
+.st-hud-h{color:var(--acc,#ffffff);font-size:12.5px;margin-bottom:2px}
 .st-hud b{color:#cfd6de;font-weight:500}
 .st-toolwrap{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:7;display:flex;flex-direction:column;align-items:center;gap:6px;max-width:calc(100vw - 700px);min-width:520px}
 .st-readout{font:12px var(--mono,ui-monospace,Menlo,monospace);color:#cfd6de;background:rgba(10,13,17,.82);border:1px solid rgba(200,214,226,.16);border-radius:6px;
@@ -4235,7 +4235,7 @@ void main() {
 .st-tool{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:54px;height:42px;padding:2px 8px;
   background:transparent;border:1px solid transparent;border-radius:6px;color:#9aa5b0;font:11px var(--mono,ui-monospace,Menlo,monospace);cursor:pointer}
 .st-tool:hover{background:rgba(255,255,255,.06);color:#e8edf2;border-color:transparent}
-.st-tool.active{border-color:var(--acc,#4fb3c9);color:#fff;background:rgba(79,179,201,.12)}
+.st-tool.active{border-color:var(--acc,#ffffff);color:#fff;background:rgba(255,255,255,.12)}
 .st-tool:disabled{opacity:.35;cursor:default}
 .st-key{font-size:13px;color:#e8edf2}.st-abbr{font-size:9.5px;letter-spacing:.08em;margin-top:2px}
 .st-dot{position:absolute;top:5px;right:6px;width:5px;height:5px;border-radius:50%;background:#7fd6a0;opacity:.8}

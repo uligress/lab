@@ -1,6 +1,6 @@
 import{t as e}from"./bundler-DrfanpzS.js";function t(t){document.title=`AmnioSim · sonda`,document.body.innerHTML=`
   <style>
-    :root{--acc:#4fb3c9;--mono:ui-monospace,"SF Mono",Menlo,monospace}
+    :root{--acc:#ffffff;--mono:"Geist Mono",ui-monospace,"SF Mono",Menlo,monospace}
     html,body{margin:0;height:100%;background:#05070a;color:#cfd6de;font:14px/1.45 var(--mono);overscroll-behavior:none;touch-action:none;-webkit-user-select:none;user-select:none}
     .wrap{display:flex;flex-direction:column;height:100%;padding:14px;box-sizing:border-box;gap:12px}
     .h{letter-spacing:.12em;color:#9aa5b0;font-size:11px}.h b{color:var(--acc);font-weight:500}
@@ -8,10 +8,10 @@ import{t as e}from"./bundler-DrfanpzS.js";function t(t){document.title=`AmnioSim
     .st[data-tone=ok]{border-color:rgba(127,214,160,.5);color:#7fd6a0}.st[data-tone=bad]{border-color:rgba(224,106,90,.6);color:#f2a99c}
     button{font:13px var(--mono);color:#e8edf2;background:rgba(255,255,255,.05);border:1px solid rgba(200,214,226,.22);border-radius:8px;padding:14px 10px}
     button.primary{background:var(--acc);color:#041016;border-color:var(--acc);font-weight:600}
-    button.on{border-color:var(--acc);color:#fff;background:rgba(79,179,201,.15)}
+    button.on{border-color:var(--acc);color:#fff;background:rgba(255,255,255,.15)}
     .row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
     .pad{flex:1;border:1px dashed rgba(200,214,226,.25);border-radius:14px;display:flex;align-items:center;justify-content:center;text-align:center;color:#7d8791;position:relative}
-    .dot{position:absolute;width:44px;height:44px;border-radius:50%;background:rgba(79,179,201,.25);border:1px solid var(--acc);transform:translate(-50%,-50%);display:none}
+    .dot{position:absolute;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.25);border:1px solid var(--acc);transform:translate(-50%,-50%);display:none}
     .ang{font-size:11.5px;color:#7d8791;text-align:center}
     .probe{height:10px;border-radius:0 0 40px 40px;background:#2a3138;margin:0 18%}
   </style>
