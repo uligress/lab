@@ -15,8 +15,8 @@ vec3 pFine=mucosaPosition*110.0;normal=normalize(normal+vec3(sin(pFine.y)*sin(pF
 }
 export function createInstrument(scene){
  const group=new T.Group();scene.add(group);group.renderOrder=5;
- const mat=new T.MeshPhysicalMaterial({color:0x101114,metalness:.35,roughness:.28,clearcoat:.9,depthTest:false,transparent:true});
- const tip=new T.Mesh(new T.CylinderGeometry(.078,.078,.16,16),new T.MeshStandardMaterial({color:0xd1bd7c,metalness:.8,roughness:.25,depthTest:false,transparent:true}));tip.renderOrder=7;group.add(tip);
+ const mat=new T.MeshPhysicalMaterial({color:0x333b46,metalness:.35,roughness:.28,clearcoat:.9,depthTest:false,transparent:true});
+ const tip=new T.Mesh(new T.CylinderGeometry(.15,.15,.24,16),new T.MeshStandardMaterial({color:0xd1bd7c,metalness:.8,roughness:.25,depthTest:false,transparent:true}));tip.renderOrder=7;group.add(tip);
  const beam=new T.Mesh(new T.ConeGeometry(.27,.65,24,1,true),new T.MeshBasicMaterial({color:0xffe6aa,transparent:true,opacity:.19,depthWrite:false,depthTest:false,transparent:true,side:T.DoubleSide}));beam.renderOrder=6;group.add(beam);let tube;
- return {update(points,position,direction){if(tube){group.remove(tube);tube.geometry.dispose();}const curve=new T.CatmullRomCurve3(points,false,'centripetal');tube=new T.Mesh(new T.TubeGeometry(curve,72,.075,12,false),mat);tube.renderOrder=5;group.add(tube);tip.position.copy(position);tip.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),direction);beam.position.copy(position).addScaledVector(direction,.32);beam.quaternion.setFromUnitVectors(new T.Vector3(0,-1,0),direction);}};
+ return {update(points,position,direction){if(tube){group.remove(tube);tube.geometry.dispose();}const curve=new T.CatmullRomCurve3(points,false,'centripetal');tube=new T.Mesh(new T.TubeGeometry(curve,72,.12,12,false),mat);tube.renderOrder=5;group.add(tube);tip.position.copy(position);tip.quaternion.setFromUnitVectors(new T.Vector3(0,1,0),direction);beam.position.copy(position).addScaledVector(direction,.32);beam.quaternion.setFromUnitVectors(new T.Vector3(0,-1,0),direction);}};
 }
