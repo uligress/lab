@@ -11,3 +11,12 @@
 #torque{display:none}
 
 #scope-labels{inset:auto;width:min(calc(100% - 52px),470px);aspect-ratio:1;left:50%;top:50%;transform:translate(-50%,-50%)}
+
+/* Shared destination colors: arrows, scope nameplates and navigation choices. */
+#pad button[data-target]{background:var(--branch-color);color:#090d12;border-color:var(--branch-color)}
+#pad button[data-target]:hover{filter:brightness(1.18)}
+#pad button[data-target]:disabled{opacity:.55;background:var(--branch-color);color:#090d12}
+#pad button[data-target] small{background:var(--branch-color);color:#090d12;border:1px solid #ffffff35}
+#scope-labels span{background:var(--branch-color);border-color:#ffffff55;color:#090d12;font-weight:500;text-shadow:none}
+#branches button[data-target]{background:color-mix(in srgb,var(--branch-color) 20%,#10151b);color:#f1f2f4;border:1px solid var(--branch-color)}
+#branches button[data-target]:hover{background:color-mix(in srgb,var(--branch-color) 40%,#10151b)}
