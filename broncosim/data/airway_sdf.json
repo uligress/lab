@@ -1,0 +1,1 @@
+{"vox": 1.1, "origin": [-124.551, 1116.85, -185.871], "dims": [234, 262, 159], "clamp": 8.0, "cols": 14, "rows": 19, "slice": "y", "layout": "tile (row,col) holds slice iy=row*cols+col; pixel x = grid x, pixel y = grid z"}
