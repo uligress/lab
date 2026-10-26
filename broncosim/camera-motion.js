@@ -43,3 +43,12 @@ export function orientation(position, direction) {
 export function smoothProgress(t) {
   return t * t * t * (t * (t * 6 - 15) + 10);
 }
+
+export function angleDelta(from, to) {
+  return T.MathUtils.radToDeg(Math.atan2(Math.sin(T.MathUtils.degToRad(to - from)), Math.cos(T.MathUtils.degToRad(to - from))));
+}
+
+export function followControl(current, target, seconds, circular = false) {
+  const delta = circular ? angleDelta(current, target) : target - current;
+  return Math.abs(delta) < .01 ? current + delta : current + delta * (1 - Math.exp(-Math.min(seconds, 1 / 15) / .09));
+}
