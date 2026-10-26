@@ -1,7 +1,7 @@
 import * as T from './vendor/three.module.js';
 import {travelCurve,orientation,smoothProgress,angleDelta,followControl} from './camera-motion.js?v=20261025-controls';
 import {mucosa,createInstrument} from './visuals.js?v=20261025-console';
-import {createCase} from './clinical-case.js?v=20261025-search';
+import {createCase} from './clinical-case.js?v=20261026-clues';
 const $=id=>document.getElementById(id), v=p=>new T.Vector3(...p);
 // Navigation hierarchy; coordinates and centerlines are loaded from anatomy.json.
 const nodes=[];
