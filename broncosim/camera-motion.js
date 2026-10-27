@@ -41,7 +41,8 @@ export function orientation(position, direction) {
 }
 
 export function smoothProgress(t) {
-  return t * t * t * (t * (t * 6 - 15) + 10);
+  t = Math.max(0, Math.min(1, t));
+  return Math.max(0, Math.min(1, t * t * t * (t * (t * 6 - 15) + 10)));
 }
 
 export function angleDelta(from, to) {
