@@ -5,144 +5,94 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>ung lab — simuladores</title>
   <meta name="description" content="ung lab: simuladores médicos educativos en el navegador.">
-  <meta name="theme-color" content="#05080c">
+  <meta name="theme-color" content="#eef0f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#07090d" media="(prefers-color-scheme: dark)">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icon-32.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="assets/icon-512.png">
   <link rel="apple-touch-icon" sizes="180x180" href="assets/icon-180.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Great+Vibes&display=swap" rel="stylesheet">
-  <!-- precarga del simulador disponible: el navegador baja three.js mientras se lee el menú -->
-  <link rel="prefetch" href="clipsim/index.html">
-  <style>
-    /* Laboratorio ung: estilo Ignitex (monocromo, Geist + Great Vibes), igual que uligress.me */
-    :root {
-      --night: #05080c; --night-2: #0b0f14; --white: #fff; --ash: #aaa9ad; --graphite: #5b5b5b;
-      --glass: rgba(255,255,255,.03); --glass-2: rgba(255,255,255,.06); --hair: rgba(255,255,255,.1);
-      --pad: clamp(16px, 2.8vw, 40px);
-      --sans: "Geist", system-ui, -apple-system, sans-serif;
-      --script: "Great Vibes", "Snell Roundhand", cursive;
-      --mono: "Geist Mono", ui-monospace, monospace;
-      --ease: cubic-bezier(.22,1,.36,1);
-      color-scheme: dark;
-    }
-    *, *::before, *::after { box-sizing: border-box; }
-    body { margin: 0; background: radial-gradient(110% 70% at 75% 0%, #141a22 0%, var(--night) 60%); background-color: var(--night); color: var(--white); font-family: var(--sans); font-weight: 500; line-height: 1.45; -webkit-font-smoothing: antialiased; min-height: 100vh; }
-    a { color: inherit; text-decoration: none; }
-    .mono { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: .02em; }
-    .script { font-family: var(--script); font-weight: 400; letter-spacing: 0; font-size: 1.12em; line-height: .8; padding: 0 .05em; }
-    .wrap { padding-inline: var(--pad); max-width: 1440px; margin: 0 auto; }
-    header { display: flex; justify-content: space-between; align-items: center; padding-block: 22px; }
-    .logo { display: inline-block; width: 64px; height: 30px; background: var(--white); -webkit-mask: url(assets/ung.png) center/contain no-repeat; mask: url(assets/ung.png) center/contain no-repeat; }
-    .back { color: var(--ash); transition: color .2s; }
-    .back:hover { color: var(--white); }
-    .hero { padding-block: clamp(48px, 10vh, 120px) clamp(32px, 7vh, 72px); display: grid; gap: 22px; }
-    .label { display: inline-flex; gap: 10px; align-items: center; color: var(--ash); font-size: 14px; margin: 0; }
-    .label span { color: var(--white); }
-    .hero h1 { margin: 0; font-size: clamp(64px, 11vw, 168px); line-height: .92; letter-spacing: -.05em; font-weight: 500; background: linear-gradient(180deg, #fff 35%, var(--ash)); -webkit-background-clip: text; background-clip: text; color: transparent; }
-    .hero h1 .script { color: var(--white); -webkit-text-fill-color: var(--white); }
-    .hero p { margin: 0; max-width: 52ch; font-size: 18px; color: var(--ash); }
-    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(14px, 2vw, 24px); padding-bottom: 80px; }
-    .card { position: relative; display: flex; flex-direction: column; background: var(--glass); border: 1px solid var(--hair); border-radius: 22px; padding: 10px; transition: transform .7s var(--ease), background .4s, border-color .4s; min-width: 0; }
-    .card .img { aspect-ratio: 16 / 10; overflow: hidden; background: var(--night-2); border-radius: 16px; }
-    .card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 1.2s var(--ease), filter .8s; }
-    .card .body { display: grid; gap: 10px; padding: 18px 12px 12px; }
-    .card .num { font-family: var(--script); font-size: 26px; color: var(--ash); line-height: 1; }
-    .card h2 { margin: 0; font-size: clamp(40px, 4.4vw, 64px); line-height: .95; letter-spacing: -.045em; font-weight: 500; }
-    .card .kicker { color: var(--ash); }
-    .card .desc { margin: 0; color: var(--ash); font-size: 15px; max-width: 60ch; }
-    .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 8px; flex-wrap: wrap; }
-    .chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 13px; border: 1px solid var(--hair); background: var(--glass); border-radius: 999px; font-size: 13px; }
-    .chip i { width: 7px; height: 7px; border-radius: 50%; background: var(--white); box-shadow: 0 0 10px rgba(255,255,255,.7); }
-    .open { display: inline-flex; align-items: center; gap: 14px; padding: 6px 6px 6px 20px; background: var(--white); color: var(--night); border-radius: 999px; font-size: 15px; }
-    .open b { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--night); color: var(--white); font-weight: 500; transition: transform .5s var(--ease); }
-    a.card:hover { transform: translateY(-6px); background: var(--glass-2); border-color: rgba(255,255,255,.2); }
-    a.card:hover .open b { transform: rotate(-45deg) scale(1.08); }
-    a.card:hover img { transform: scale(1.04); }
-    a.card:focus-visible { outline: 2px solid var(--white); outline-offset: 4px; }
-    .card.locked { cursor: not-allowed; }
-    .card.locked img { filter: grayscale(1) brightness(.7); }
-    .card.locked .chip { color: var(--ash); }
-    .card.locked .chip i { background: var(--ash); box-shadow: none; }
-    .lock { color: var(--ash); display: inline-flex; align-items: center; gap: 8px; }
-    .lock svg { width: 14px; height: 14px; }
-    .note { padding-block: 28px; border-top: 1px solid var(--hair); color: var(--ash); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-    @media (max-width: 860px) { .grid { grid-template-columns: minmax(0, 1fr); } }
-    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/glass.css">
+  <link rel="stylesheet" href="lab-glass.css">
 </head>
-<body>
-  <div class="wrap">
-    <header>
-      <a href="https://uligress.me" aria-label="ung — inicio"><span class="logo"></span></a>
-      <a class="mono back" href="https://uligress.me">← uligress.me</a>
-    </header>
-
+<body class="g-backdrop">
+  <a class="skip" href="#sims">Saltar a los simuladores</a>
+  <header class="topnav g-surface g-surface--strong">
+    <a href="../" class="brand" aria-label="ung — inicio"><span class="logo" aria-hidden="true"></span></a>
+    <nav aria-label="Principal">
+      <a href="../#disponible">Disponible</a>
+      <a href="../#proyectos">Proyectos</a>
+      <a href="./" class="is-current" aria-current="page">Labs</a>
+    </nav>
+  </header>
+  <main id="main">
     <section class="hero">
-      <p class="label"><span aria-hidden="true">✦</span> Simuladores médicos en el navegador</p>
+      <p class="eyebrow"><span aria-hidden="true">✦</span> Simuladores médicos en el navegador</p>
       <h1>ung <span class="script">lab</span></h1>
-      <p>Simuladores médicos educativos que corren en el navegador, sin instalar nada. Elige uno para empezar.</p>
+      <p class="lede">Simuladores médicos educativos que corren en el navegador, sin instalar nada. Elige uno para empezar.</p>
+      <p class="count">5 simuladores</p>
     </section>
-
-    <main class="grid">
-      <a class="card" href="clipsim/">
-        <div class="img"><img src="img/neurocirugia.jpg?v=2" alt="Domo de un aneurisma cerebral con su clip, render 3D en cromo y obsidiana" loading="eager"></div>
-        <div class="body">
-          <span class="num">(01)</span>
-          <span class="mono kicker">Neurocirugía vascular · microscopio</span>
-          <h2>Clip<span class="script">Sim</span></h2>
-          <p class="desc">Clipaje microquirúrgico de un aneurisma de la unión carótida interna–comunicante posterior por abordaje pterional transilviano. Seis etapas, diez instrumentos, retracción con presión, succión a dos manos e informe final con tu cinemática.</p>
-          <div class="row"><span class="chip"><i></i>Disponible</span><span class="open">Abrir simulador <b aria-hidden="true">→</b></span></div>
-        </div>
-      </a>
-
-      <a class="card" href="amniosim/">
-        <div class="img"><img src="img/amniosim.jpg?v=2" alt="Aguja espinal frente al saco amniótico, render 3D" loading="lazy"></div>
-        <div class="body">
-          <span class="num">(02)</span>
-          <span class="mono kicker">Medicina materno-fetal · ultrasonido</span>
-          <h2>Amnio<span class="script">Sim</span></h2>
-          <p class="desc">Amniocentesis guiada por ultrasonido con ecografía simulada, tenting de membranas, casos aleatorios y retroalimentación de cada error hasta la maestría.</p>
-          <div class="row"><span class="chip"><i></i>Disponible</span><span class="open">Abrir simulador <b aria-hidden="true">→</b></span></div>
-        </div>
-      </a>
-
-      <a class="card" href="stentsim/">
-        <div class="img"><img src="img/stentsim.jpg?v=2" alt="Malla de un stent metálico, render 3D" loading="lazy"></div>
-        <div class="body">
-          <span class="num">(03)</span>
-          <span class="mono kicker">Endovascular · fluoroscopia</span>
-          <h2>Stent<span class="script">Sim</span></h2>
-          <p class="desc">Angioplastia y stent ilíaco bajo fluoroscopia simulada: guía, contraste, mapa de ruta, medición y liberación de un stent de nitinol.</p>
-          <div class="row"><span class="chip"><i></i>Beta</span><span class="open">Abrir simulador <b aria-hidden="true">→</b></span></div>
-        </div>
-      </a>
-      <a class="card" href="herniosim/">
-        <div class="img"><img src="img/herniosim.jpg" alt="Malla quirúrgica de polipropileno a medio desenrollar con dos grapas helicoidales, render 3D" loading="lazy"></div>
-        <div class="body">
-          <span class="num">(04)</span>
-          <span class="mono kicker">Cirugía general · laparoscopia</span>
-          <h2>Hernio<span class="script">Sim</span></h2>
-          <p class="desc">Hernioplastia inguinal laparoscópica TAPP, hernia indirecta o directa: colgajo peritoneal, visión crítica de seguridad, reducción del saco, malla con fijación por zonas seguras, cierre, informe final y modo demostración.</p>
-          <div class="row"><span class="chip"><i></i>Disponible</span><span class="open">Abrir simulador <b aria-hidden="true">→</b></span></div>
-        </div>
-      </a>
-      <a class="card" href="broncosim/">
-        <div class="img"><img src="broncosim/cover.svg?v=20261025-ung" alt="Árbol bronquial en cromo sobre fondo negro" loading="lazy"></div>
-        <div class="body">
-          <span class="num">(05)</span>
-          <span class="mono kicker">Neumología · anatomía bronquial</span>
-          <h2>Bronco<span class="script">Sim</span></h2>
-          <p class="desc">Explora el árbol bronquial en 3D y desde la vista endoscópica. Navega por 31 puntos, identifica los segmentos y practica la orientación con rotación y flexión.</p>
-          <div class="row"><span class="chip"><i></i>Beta educativa</span><span class="open">Abrir simulador <b aria-hidden="true">→</b></span></div>
-        </div>
-      </a>
-    </main>
-
-    <footer class="note">
-      <span>Demos educativas. No son entrenamiento clínico, ni dispositivos médicos, ni consejo médico.</span>
-      <span class="mono">© 2026 ung</span>
-    </footer>
-  </div>
+    <ul class="sim-grid" id="sims" aria-label="Simuladores">
+      <li>
+        <a class="sim-card" href="broncosim/" aria-label="Abrir BroncoSim: Neumología · anatomía bronquial">
+          <span class="sim-media"><img src="broncosim/cover.svg?v=20261025-ung" alt="Árbol bronquial en cromo sobre fondo negro" loading="lazy" width="800" height="500"></span>
+          <span class="sim-body">
+            <span class="sim-meta"><span class="g-chip">Neumología · anatomía bronquial</span><span class="g-chip status beta"><i aria-hidden="true"></i>Beta educativa</span></span>
+            <span class="sim-name">Bronco<span class="script">Sim</span></span>
+            <span class="sim-desc">Explora el árbol bronquial en 3D y desde la vista endoscópica. Navega por 31 puntos, identifica los segmentos y practica la orientación con rotación y flexión.</span>
+            <span class="sim-open g-btn g-btn--primary">Abrir simulador <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="sim-card" href="amniosim/" aria-label="Abrir AmnioSim: Medicina materno-fetal · ultrasonido">
+          <span class="sim-media"><img src="img/amniosim.jpg?v=2" alt="Aguja espinal frente al saco amniótico, render 3D" loading="lazy" width="800" height="500"></span>
+          <span class="sim-body">
+            <span class="sim-meta"><span class="g-chip">Medicina materno-fetal · ultrasonido</span><span class="g-chip status ok"><i aria-hidden="true"></i>Disponible</span></span>
+            <span class="sim-name">Amnio<span class="script">Sim</span></span>
+            <span class="sim-desc">Amniocentesis guiada por ultrasonido con ecografía simulada, tenting de membranas, casos aleatorios y retroalimentación de cada error hasta la maestría.</span>
+            <span class="sim-open g-btn g-btn--primary">Abrir simulador <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="sim-card" href="clipsim/" aria-label="Abrir ClipSim: Neurocirugía vascular · microscopio">
+          <span class="sim-media"><img src="img/neurocirugia.jpg?v=2" alt="Domo de un aneurisma cerebral con su clip, render 3D en cromo y obsidiana" loading="eager" width="800" height="500"></span>
+          <span class="sim-body">
+            <span class="sim-meta"><span class="g-chip">Neurocirugía vascular · microscopio</span><span class="g-chip status ok"><i aria-hidden="true"></i>Disponible</span></span>
+            <span class="sim-name">Clip<span class="script">Sim</span></span>
+            <span class="sim-desc">Clipaje microquirúrgico de un aneurisma de la unión carótida interna–comunicante posterior por abordaje pterional transilviano. Seis etapas, diez instrumentos, retracción con presión, succión a dos manos e informe final con tu cinemática.</span>
+            <span class="sim-open g-btn g-btn--primary">Abrir simulador <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="sim-card" href="stentsim/" aria-label="Abrir StentSim: Endovascular · fluoroscopia">
+          <span class="sim-media"><img src="img/stentsim.jpg?v=2" alt="Malla de un stent metálico, render 3D" loading="lazy" width="800" height="500"></span>
+          <span class="sim-body">
+            <span class="sim-meta"><span class="g-chip">Endovascular · fluoroscopia</span><span class="g-chip status beta"><i aria-hidden="true"></i>Beta</span></span>
+            <span class="sim-name">Stent<span class="script">Sim</span></span>
+            <span class="sim-desc">Angioplastia y stent ilíaco bajo fluoroscopia simulada: guía, contraste, mapa de ruta, medición y liberación de un stent de nitinol.</span>
+            <span class="sim-open g-btn g-btn--primary">Abrir simulador <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+      </li>
+      <li>
+        <a class="sim-card" href="herniosim/" aria-label="Abrir HernioSim: Cirugía general · laparoscopia">
+          <span class="sim-media"><img src="img/herniosim.jpg" alt="Malla quirúrgica de polipropileno a medio desenrollar con dos grapas helicoidales, render 3D" loading="lazy" width="800" height="500"></span>
+          <span class="sim-body">
+            <span class="sim-meta"><span class="g-chip">Cirugía general · laparoscopia</span><span class="g-chip status ok"><i aria-hidden="true"></i>Disponible</span></span>
+            <span class="sim-name">Hernio<span class="script">Sim</span></span>
+            <span class="sim-desc">Hernioplastia inguinal laparoscópica TAPP, hernia indirecta o directa: colgajo peritoneal, visión crítica de seguridad, reducción del saco, malla con fijación por zonas seguras, cierre, informe final y modo demostración.</span>
+            <span class="sim-open g-btn g-btn--primary">Abrir simulador <span aria-hidden="true">→</span></span>
+          </span>
+        </a>
+      </li>
+    </ul>
+  </main>
+  <footer class="note">
+    <span>Demos educativas. No son entrenamiento clínico, ni dispositivos médicos, ni consejo médico.</span>
+    <span class="mono">© 2026 ung</span>
+  </footer>
 </body>
 </html>
